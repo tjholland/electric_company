@@ -40,5 +40,23 @@ contract Grid is SuperAppBase {
         _host.registerApp(configWord);
     }
     
+    /**************************************************************************
+     * SuperApp callbacks
+     *************************************************************************/
     
+    function afterAgreementCreate(
+        ISuperToken _superToken,
+        address _agreementClass,
+        bytes32, // _agreementId,
+        bytes calldata, /*_agreementData*/
+        bytes calldata, // _cbdata,
+        bytes calldata _ctx
+    )
+        external
+        overrideonlyExpected(_superToken, _agreementClass)
+        onlyHost
+        returns (bytes memory newCtx)
+    {
+        return _updateOutflow(_ctx); // I think my logic goes here
+    }
 }
